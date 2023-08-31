@@ -163,7 +163,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="w-11/12 rounded-xl items-center justify-center bg-[#7d7c7c43] flex max-h-[50vh]">
+      <div className="w-11/12 rounded-xl items-center justify-center flex max-h-[50vh]">
         {!loading ? (
           <DataGrid
             rows={rowData}
@@ -174,7 +174,12 @@ const Dashboard = () => {
               },
             }}
             pageSizeOptions={[0, 5]}
-            sx={{ color: "white", fontWeight: "900", border: "2px" }}
+            sx={{
+              color: "white",
+              fontWeight: "900",
+              // border: "2px ",
+              backgroundColor: "#1a1a1a80",
+            }}
             onRowClick={handleRowClick}
           />
         ) : (
