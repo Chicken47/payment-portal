@@ -13,6 +13,7 @@ const Dashboard = () => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [rowData, setRowData] = useRecoilState(tableData);
+  const [exchangeRate, setExchangeRate] = useState();
 
   const columns = [
     { field: "transaction_date", headerName: "Transaction Date", width: 140 },
@@ -30,9 +31,15 @@ const Dashboard = () => {
       width: 140,
     },
     {
-      field: "amount",
+      field: "usd",
       headerName: "USD Equivalent",
       width: 140,
+      renderCell: (params) => {
+        const amount = params.row.amount;
+        const exchangeRate = 0.014;
+        const usdEquivalent = amount * exchangeRate;
+        return <span>{usdEquivalent.toFixed(2)}</span>;
+      },
     },
     {
       field: "status",
@@ -62,7 +69,7 @@ const Dashboard = () => {
     },
   ];
 
-  const url = "https://mocki.io/v1/74f6ba59-2aa8-4035-8f48-7d01d6dee4f5";
+  const url = "https://mocki.io/v1/ccb4f99d-97c6-430c-900d-26be50c9748b";
   const getData = () => {
     setLoading(true);
     fetch(url)
@@ -84,6 +91,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     getData();
+    fetch("https://mocki.io/v1/b0202740-83de-4d16-8880-df769ca4dba9")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setExchangeRate(data.exchange_rate);
+      })
+      .catch(() => {
+        setLoading(false);
+        alert("Something Went Wrong!");
+      });
   }, []);
 
   const handleRowClick = (params) => {
