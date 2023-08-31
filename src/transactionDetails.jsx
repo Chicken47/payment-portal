@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { tableData } from "./state";
 import { useParams } from "react-router-dom";
-import { DoubleArrow, HighlightOffOutlined } from "@mui/icons-material";
+import { DoubleArrow, Edit, HighlightOffOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const TransactionDetails = () => {
@@ -22,19 +22,26 @@ const TransactionDetails = () => {
           <div className="text-white font-bold text-[2vw]">
             Invoice Number: {selectedRow?.invoice_no}
           </div>
-          <div
-            onClick={() => navigate("/")}
-            className="scale-150 cursor-pointer"
-          >
-            <HighlightOffOutlined />
+          <div className="flex items-center space-x-2">
+            <div
+              onClick={() => navigate("/")}
+              className="scale-150 cursor-pointer"
+            >
+              <HighlightOffOutlined />
+            </div>
+            <div className="transition-all cursor-pointer hover:scale-125">
+              <Edit />
+            </div>
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="text-[3vw] font-extrabold tracking-widest">
+          <span className="text-[3vw] font-extrabold ">
             {selectedRow?.payer}
           </span>
-          <DoubleArrow />
-          <span className="text-[3vw] font-extrabold tracking-widest">
+          <span className="p-2 scale-150 bg-blue-700 rounded-full">
+            <DoubleArrow />
+          </span>
+          <span className="text-[3vw] font-extrabold ">
             {selectedRow?.payee}
           </span>
         </div>
